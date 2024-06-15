@@ -14,8 +14,12 @@ const Home = () => {
         const dataJson = await response.json();
         setTareas(Array.isArray(dataJson.todos) ? dataJson.todos : []);
         console.log("Datos obtenidos:", dataJson.todos);
-      } else {
-        console.error("Error al recuperar datos:", response.statusText);
+      } if (response.status === 404) {
+        await fetch(`https://playground.4geeks.com/todo/users/Jorge_Enrique`, {
+          method: "POST",
+        });
+        setTareas([]);
+        alert("Usuario API creado nuevamente, por favor recargue la página");
       }
     } catch (error) {
       console.error("Error al recuperar datos:", error);
